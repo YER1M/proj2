@@ -1,5 +1,5 @@
 const int PWM_A   = 3;
-const int DIR_A   = 12;
+const int DIR_A   = 12; 
 const int BRAKE_A = 9;
 const int PWM_B= 11;
 const int DIR_B   = 13;
@@ -9,6 +9,7 @@ const int gpio1 = 43;
 const int gpio2 = 45;
 const int gpio3 = 47;
 
+int state = 0;
 
 void setup() {
    pinMode(gpio1, INPUT);
@@ -25,6 +26,9 @@ void setup() {
    digitalWrite(BRAKE_B, LOW);  // setting brake LOW disable motor brake
    digitalWrite(DIR_B, HIGH);   // setting direction to HIGH the motor will spin forward
 
+   analogWrite(PWM_A, 0);
+   analogWrite(PWM_B, 0);
+
    useArduinoPwmFreq();
 
    SerialASC.begin(9600);
@@ -33,20 +37,25 @@ void setup() {
 }
 void loop() {
   if (digitalRead(gpio3) == 0){
-    digitalWrite(BRAKE_A, HIGH);
-    digitalWrite(BRAKE_B, HIGH);
+    analogWrite(PWM_A, 0);
+    analogWrite(PWM_B, 0);
   }
   else{
     state = receiveState();
-    motor_Rot_L(state);
+    SerialASC.print("state: ");
+    SerialASC.println(state);
+    //motor_Rot_L(state);
   }
+  delay(100);
 }
 
 int receiveState(){
-  if (digitalRead(gpio1) == 0 && digitalRead(gpio2) == 0) {state=0;}
-  else if (digitalRead(gpio1) == 0 && digitalRead(gpio2) == 1) {state=1;}
-  else if (digitalRead(gpio1) == 1 && digitalRead(gpio2) == 0) {state=2;}
-  else if (digitalRead(gpio1) == 1 && digitalRead(gpio2) == 1) {state=3;}
+  if (digitalRead(gpio1) == LOW && digitalRead(gpio2) == LOW) {state=0;}
+  else if (digitalRead(gpio1) == LOW && digitalRead(gpio2) == HIGH) {state=1;}
+  else if (digitalRead(gpio1) == HIGH && digitalRead(gpio2) == LOW) {state=2;}
+  //else if (digitalRead(gpio1) == HIGH && digitalRead(gpio2) == HIGH) {state=3;}
+  else {state=3;}
+  return state;
 }
 
 void motor_Rot_L(int state){
