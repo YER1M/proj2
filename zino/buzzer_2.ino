@@ -31,32 +31,25 @@ void loop() {
   Beep(4);
 }
 
-
 void Beep(int distance)
 {
   if ((buzzer.getState() == BUZZER_IDLE) && (Car_Mode == LED_AND_BUZZER)) { // if stopped
     if(distance < 50 && distance >= 25)
     {
-      int length = sizeof(noteDurations_50) / sizeof(int);
-      buzzer.playMelody(melody_1, noteDurations_50, length); // playing
-    }
-    else if(distance < 25 && distance >= 10)
-    {
       int length = sizeof(noteDurations_25) / sizeof(int);
       buzzer.playMelody(melody_1, noteDurations_25, length); // playing
     }
-    else if(distance < 10 && distance >= 5)
+    else if(distance < 25 && distance >= 10)
     {
       int length = sizeof(noteDurations_10) / sizeof(int);
       buzzer.playMelody(melody_2, noteDurations_10, length); // playing
     }
-    else if(distance < 5)
+    else if(distance < 10)
     {
       int length = sizeof(noteDurations_5) / sizeof(int);
       buzzer.playMelody(melody_2, noteDurations_5, length); // playing
     }
   }
-  
 }
 
 void Buzzer_Stop()
@@ -65,31 +58,4 @@ void Buzzer_Stop()
       buzzer.stop() ; // stop
   }
 }
-
-/*
-void Beep_2(int distance)
-{
-  if(distance >= 50)
-  {
-    buzzer.beep(500); // generates a 500ms beep
-  }
-  else if(distance < 50 && distance >= 25)
-  {
-    buzzer.beep(400); // generates a 400ms beep
-  }
-  else if(distance < 25 && distance >= 10)
-  {
-    buzzer.beep(300); // generates a 300ms beep
-  }
-  else if(distance < 10 && distance >= 5)
-  {
-    buzzer.beep(200); // generates a 200ms beep
-  }
-  else
-  {
-    buzzer.beep(100); // generates a 100ms beep
-  }
-}
-*/
-
 
