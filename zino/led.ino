@@ -17,7 +17,7 @@ void setup() {
 }
 
 void loop() {
-  LED_Blink(100);
+  LED_Blink(4);
 }
 
 void LED_Blink(int distance) { // blink_interval : milliseconds
