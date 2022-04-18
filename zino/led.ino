@@ -27,13 +27,9 @@ void LED_Blink(int distance) { // blink_interval : milliseconds
   }
   else if(distance < 25 && distance >= 10)
   {
-    blink_interval = 350;
+    blink_interval = 300;
   }
-  else if(distance < 10 && distance >= 5)
-  {
-    blink_interval = 200;
-  }
-  else if(distance < 5)
+  else if(distance < 10)
   {
     blink_interval = 100;
   }
@@ -68,4 +64,3 @@ void LED_Blink(int distance) { // blink_interval : milliseconds
     previousMillis = currentMillis;
   }
 }
-
